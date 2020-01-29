@@ -2,16 +2,18 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcontroller.external.samples.*;
 
-//This code is for the blue skystone side
 
-@Autonomous(name="SkyStoneAutoBlue", group="Pushbot")
+//This code is for the red foundation side
+
+@Autonomous(name="FoundationAutoRed", group="Pushbot")
 //@Disabled
-public class SkyStoneAutoBlue extends LinearOpMode{
+public class FoundationAutoRed extends LinearOpMode{
     /* Declare OpMode members. */
     SkyStoneHardware robot = new SkyStoneHardware();
     private ElapsedTime runtime  = new ElapsedTime();
@@ -35,26 +37,13 @@ public class SkyStoneAutoBlue extends LinearOpMode{
         waitForStart();
 
         /* path for auto with phone camera and no outside factors
-        1. Find skystone
-        2. Pick it up
-        3. Go under skybridge
-        4. Place it on foundation
+        1. move the foundation
+        2. park under bridge
         */
 
-        moveForward(0.4, 1.12); // until you reach the stones
-        pauseRobot(0.4);
-        clawDown(1.5);
-        clawClose(1.5);
-        pauseRobot(0.5);
-        moveBackward(0.4, 0.28);
-        turnLeft(.5, 0.77);
+        moveForward(0.4, 0.3); // until you reach the stones
+        turnLeft(0.5, 0.9);
         skybridge();
-        moveForward(0.4, 0.48);
-        pauseRobot(0.4);
-        clawOpen(1.5);
-        clawUp(1.5);
-        clawClose(1.5);
-        moveBackward(0.4, 0.38);
         StopRobot();
 
     }
@@ -532,8 +521,7 @@ public class SkyStoneAutoBlue extends LinearOpMode{
         //drive forward until it reaches the tape under the skybridge
         Color.RGBToHSV(robot.color_sensor.red()*8, robot.color_sensor.green()*8, robot.color_sensor.blue()*8, hsvValues);
         robot.color_sensor.enableLed(true);
-
-        while (robot.color_sensor.red()*2 > robot.color_sensor.blue()){
+        while (robot.color_sensor.red() < robot.color_sensor.blue()*2){
             //have to see if red value is actually greater than blue value (telemetry)
             telemetry.addData("Red", robot.color_sensor.red());
             telemetry.addData("Blue", robot.color_sensor.blue());
@@ -580,7 +568,6 @@ public class SkyStoneAutoBlue extends LinearOpMode{
             robot.clawservobottom.setPosition(0.5);
         }
     }
-
     public void clawDown(double seconds){
         runtime.reset();
         while(opModeIsActive() && (runtime.seconds() < seconds)){

@@ -30,6 +30,8 @@ public class SkyStoneAutoRed extends LinearOpMode{
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
+        robot.clawservobottom.setPosition(1);
+        robot.clawservotop.setPosition(0.2);
 
         telemetry.addData("Say", "Robot is ready");
         telemetry.update();
@@ -42,18 +44,20 @@ public class SkyStoneAutoRed extends LinearOpMode{
         4. Place it on foundation
         */
 
-        moveForward(0.4, 1.15); // until you reach the stones
+        moveForward(0.4, 1.12); // until you reach the stones
+        pauseRobot(0.4);
         clawDown(1.5);
         clawClose(1.5);
-        raisearm(0.5);
         pauseRobot(0.5);
-        moveBackward(0.4, 0.3);
-        turnRight(.5, 0.9);
+        moveBackward(0.4, 0.28);
+        turnRight(.5, 0.77);
         skybridge();
-        moveForward(0.4, 0.5);
+        moveForward(0.4, 0.48);
+        pauseRobot(0.4);
         clawOpen(1.5);
         clawUp(1.5);
-        moveBackward(0.4, 0.5);
+        clawClose(1.5);
+        moveBackward(0.4, 0.38);
         StopRobot();
 
     }
@@ -581,7 +585,7 @@ public class SkyStoneAutoRed extends LinearOpMode{
     public void clawDown(double seconds){
         runtime.reset();
         while(opModeIsActive() && (runtime.seconds() < seconds)){
-            robot.clawservobottom.setPosition(0.30);
+            robot.clawservobottom.setPosition(0.0);
         }
     }
     public void clawClose(double seconds){

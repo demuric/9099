@@ -30,9 +30,11 @@ public class SkyStoneTeleOp extends LinearOpMode {
         double gamepad1RightY;
 
         double SPEED_MODIFIER = 1.0;
-
         double SPEED_MODIFIER_INTERVAL = 0.25;
+
         robot.init(hardwareMap);
+        robot.clawservobottom.setPosition(0.5);
+        robot.clawservotop.setPosition(0.5);
 
         telemetry.addData("Say", "Robot is ready");
         telemetry.update();
@@ -46,6 +48,9 @@ public class SkyStoneTeleOp extends LinearOpMode {
             telemetry.addData("LeftY: ", gamepad1LeftY);
             telemetry.addData("LeftX: ", gamepad1LeftX);
             telemetry.addData("RightX: ", gamepad1RightX);
+
+            telemetry.addData("red: ", robot.color_sensor.red());
+            telemetry.addData("blue: ", robot.color_sensor.blue());
 
             telemetry.update();
 
@@ -64,13 +69,13 @@ public class SkyStoneTeleOp extends LinearOpMode {
 
             // raises the arm
             if (gamepad1.dpad_up) {
-                robot.armMotorLeft.setPower(-1);
-                robot.armMotorRight.setPower(-1);
+                robot.armMotorLeft.setPower(-0.8);
+                robot.armMotorRight.setPower(0.8);
             }
             // Lowers the arm
-            if (gamepad1.dpad_down){
-                robot.armMotorLeft.setPower(1);
-                robot.armMotorRight.setPower(1);
+            else if (gamepad1.dpad_down){
+                robot.armMotorLeft.setPower(0.8);
+                robot.armMotorRight.setPower(-0.8);
             }
             // Sets the arm motor to not move
             else{
@@ -79,14 +84,21 @@ public class SkyStoneTeleOp extends LinearOpMode {
             }
 
             if(gamepad1.a){
-                //open the claw
-                robot.clawservotop.setPosition(0.27);
-                robot.clawservobottom.setPosition(0.27);
-            }
-            if(gamepad1.b){
-                // close the claw
-                robot.clawservobottom.setPosition(1);
+                //close the claw
                 robot.clawservotop.setPosition(1);
+            }
+            else if(gamepad1.b){
+                // open the claw
+                robot.clawservotop.setPosition(0.2);
+            }
+
+            if(gamepad1.x){
+                // lower the claw
+                robot.clawservobottom.setPosition(0.0);
+            }
+            else if(gamepad1.y){
+                // raise the claw
+                robot.clawservobottom.setPosition(0.5);
             }
 
         }

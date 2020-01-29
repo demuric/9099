@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,17 +19,14 @@ REV Expansion Hub 2:
   Motor Port 1: lmb
   Motor Port 2: rmf
   Motor Port 3: lmf
-  Servo port 0: ct
-  Servo port 1: cb
+  Servo port 4: ct
+  Servo port 5: cb
 
 REV Expansion Hub 1:
-   Motor port 0: larm
-   Motor port 1: rarm
+   Motor port 2: larm
+   Motor port 3: rarm
    I2C Bus port 1: color
 */
-
-
-
 
 public class SkyStoneHardware
 {
@@ -40,7 +38,7 @@ public class SkyStoneHardware
     public DcMotor  rightBackMotor   = null;
     public DcMotor  armMotorLeft     = null;
     public DcMotor  armMotorRight    = null;
-    public ColorSensor color_sensor  = null;
+    public RevColorSensorV3 color_sensor  = null;
     public Servo    clawservobottom  = null;
     public Servo    clawservotop     = null;
 
@@ -68,7 +66,7 @@ public class SkyStoneHardware
         armMotorRight    = hwMap.get(DcMotor.class, "rarm");
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
-        color_sensor     = hwMap.colorSensor.get("color");
+        color_sensor     = hwMap.get(RevColorSensorV3.class, "sensor");
         clawservotop     = hwMap.get(Servo.class,"ct");
         clawservobottom  = hwMap.get(Servo.class,"cb");
 
@@ -79,8 +77,8 @@ public class SkyStoneHardware
         rightBackMotor.setPower(0.0);
         armMotorLeft.setPower(0.0);
         armMotorRight.setPower(0.0);
-        clawservotop.setPosition(0.0);
-        clawservobottom.setPosition(0.0);
+      //  clawservotop.setPosition(0.0);
+      //  clawservobottom.setPosition(0.0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
